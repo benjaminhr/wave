@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -e
+
+case $1 in
+  "install")
+    echo "This might take a while... "
+
+    brew_installed=$(which brew)
+    if [ "$brew_installed" != "/usr/local/bin/brew" ]; then
+      brew_installation=$(/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)")
+      echo brew_installation
+    else
+      brew install ffmpeg
+      brew install gifsicle
+      brew install lolcat
+    fi
+
+    echo "--------------Dependencies installed --------------" | lolcat
+  ;;
+
+  "update")
+    git pull
+    rm /usr/local/bin/wave
+    cp wave /usr/local/bin
+  ;;
+
+  "link")
+    dir=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
+    target=/usr/local/bin/wave
+
+    if [ ! -e "$target" ]; then
+      ln -s $dir/wave $target
+      echo "Created symlink in $target"
+    else
+      echo "Already exists in $target"
+      exit 1
+    fi
+
+    echo "\xE2\x9A\xA1 Great success!\xE2\x9A\xA1" | lolcat
+  ;;
+
+  *)
+    input=$1
+    output=$2
+
+    echo $(ffmpeg -i $input.mov -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $ouput.gif || echo "\xE2\x9A\xA1 Great success!\xE2\x9A\xA1" | lolcat)
+
+esac
