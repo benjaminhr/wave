@@ -14,6 +14,17 @@ case $1 in
       brew install ffmpeg
       brew install gifsicle
       brew install lolcat
+      
+      dir=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
+      target=/usr/local/bin/wave
+
+      if [ ! -e "$target" ]; then
+        ln -s $dir/wave $target
+        echo "Created symlink in $target"
+      else
+        echo "Already exists in $target"
+        exit 1
+      fi
     fi
 
     echo "--------------Dependencies installed --------------" | lolcat
