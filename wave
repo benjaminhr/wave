@@ -44,7 +44,9 @@ case $1 in
       ln -s $dir/wave $target
       echo "Created symlink in $target"
     else
-      echo "Already exists in $target"
+      rm /usr/local/bin/wave
+      cp ~/dev/wave /usr/local/bin/wave
+      echo "Already exists in $target BUT updated symlink anyway"
       exit 1
     fi
 
