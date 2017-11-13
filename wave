@@ -45,7 +45,7 @@ case $1 in
       echo "Created symlink in $target"
     else
       rm /usr/local/bin/wave
-      cp ~/dev/wave /usr/local/bin/wave
+      cp ~/dev/wave/wave /usr/local/bin/wave
       echo "Already exists in $target BUT updated symlink anyway"
       exit 1
     fi
