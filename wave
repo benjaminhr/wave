@@ -55,6 +55,6 @@ case $1 in
     input=$1
     output=$2
 
-    echo $(ffmpeg -i $input.mov -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $ouput.gif || echo "\xE2\x9A\xA1 Great success!\xE2\x9A\xA1" | lolcat)
+    echo $(ffmpeg -i $input -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $ouput || echo "\xE2\x9A\xA1 Great success!\xE2\x9A\xA1" | lolcat)
 
 esac
